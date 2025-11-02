@@ -72,6 +72,12 @@ The easiest way to use DeepSeek-OCR is with [uv](https://docs.astral.sh/uv/), a 
 
 ### Installation
 
+**Option 1: No installation needed (use Method 3 in Usage)**
+
+If you use `uvx --from git+https://...`, no installation is required!
+
+**Option 2: Clone and install locally**
+
 ```bash
 # Clone the repository
 git clone https://github.com/karaage0703/DeepSeek-OCR.git
@@ -86,11 +92,14 @@ uv sync
 Convert documents (PDF/PNG/JPG) to Markdown:
 
 ```bash
-# Using uv run
+# Method 1: Using uv run (after cloning the repo)
 uv run deepseek_ocr.py your_document.pdf
 
-# Using uvx (from project directory)
+# Method 2: Using uvx from project directory
 uvx --from . deepseek_ocr your_image.png output.md
+
+# Method 3: Using uvx directly from GitHub (no clone needed)
+uvx --from git+https://github.com/karaage0703/DeepSeek-OCR deepseek_ocr your_document.pdf
 ```
 
 ### Features
