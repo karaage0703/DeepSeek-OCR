@@ -67,10 +67,15 @@ The easiest way to use DeepSeek-OCR is with [uv](https://docs.astral.sh/uv/), a 
 
 ### Prerequisites
 - Python 3.11+
-- **NVIDIA GPU with CUDA support (REQUIRED)**
-  - Tested on DGX Spark (NVIDIA GB10, CUDA 12.9)
-  - Should work on other NVIDIA GPUs with sufficient VRAM
-  - **CPU-only execution is NOT supported** (requires GPU)
+- **GPU or CPU**
+  - **GPU (Recommended)**: NVIDIA GPU with CUDA support
+    - Tested on DGX Spark (NVIDIA GB10, CUDA 12.9)
+    - Works on other NVIDIA GPUs with sufficient VRAM
+    - Fast inference: ~5-10 seconds per page
+  - **CPU (Slow but works)**:
+    - Will automatically use CPU if no GPU is available
+    - WARNING: Very slow (several minutes per page)
+    - Requires significant RAM (~16GB+ recommended)
 - [uv](https://docs.astral.sh/uv/) installed
 
 ### Installation
@@ -88,7 +93,13 @@ cd DeepSeek-OCR
 
 # Install dependencies (automatic with uv)
 uv sync
+
+# (Optional) For GPU users: Install CUDA-enabled PyTorch
+# This will replace the CPU version with CUDA version for better performance
+uv pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 ```
+
+**Note**: By default, CPU version of PyTorch is installed. GPU users should run the optional command above for CUDA support.
 
 ### Usage
 
@@ -102,13 +113,17 @@ uv run deepseek_ocr.py your_document.pdf
 uvx --from . deepseek_ocr your_image.png output.md
 
 # Method 3: Using uvx directly from GitHub (no clone needed)
-uvx --from git+https://github.com/karaage0703/DeepSeek-OCR deepseek_ocr your_document.pdf
+# Use the CPU/GPU support branch:
+uvx --from git+https://github.com/karaage0703/DeepSeek-OCR@feature/cpu-gpu-support deepseek_ocr your_document.pdf
 ```
 
 ### Features
+- **Automatic device detection** (GPU/CPU)
+  - Uses GPU if available for fast inference
+  - Falls back to CPU automatically if no GPU detected
 - Supports PDF, PNG, and JPG files
 - Automatic image extraction and saving
-- Uses CUDA-optimized PyTorch (CUDA 12.9)
+- Works with any CUDA-compatible GPU (optional CUDA PyTorch installation)
 - Simple dependency management with `pyproject.toml`
 
 ### Output

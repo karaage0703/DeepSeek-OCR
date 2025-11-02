@@ -92,7 +92,18 @@ def main():
     from transformers import AutoModel, AutoTokenizer
     import torch
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = '0'
+    # Auto-detect device (GPU or CPU)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Using device: {device}")
+
+    if device.type == "cuda":
+        os.environ["CUDA_VISIBLE_DEVICES"] = '0'
+        print(f"GPU: {torch.cuda.get_device_name(0)}")
+        print(f"VRAM: {torch.cuda.get_device_properties(0).total_memory / 1024**3:.1f} GB")
+    else:
+        print("WARNING: Running on CPU - this will be very slow!")
+        print("Inference may take several minutes per page.")
+
     model_name = 'deepseek-ai/DeepSeek-OCR'
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
@@ -102,7 +113,12 @@ def main():
         trust_remote_code=True,
         use_safetensors=True
     )
-    model = model.eval().cuda().to(torch.bfloat16)
+
+    # Use bfloat16 on GPU, float32 on CPU
+    if device.type == "cuda":
+        model = model.eval().to(device).to(torch.bfloat16)
+    else:
+        model = model.eval().to(device)
 
     print("Model loaded successfully!")
 

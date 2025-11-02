@@ -1,7 +1,7 @@
 [project]
 name = "deepseek-ocr"
-version = "0.1.0"
-description = "DeepSeek-OCR: Convert documents (PDF/PNG/JPG) to Markdown"
+version = "0.2.0"
+description = "DeepSeek-OCR: Convert documents (PDF/PNG/JPG) to Markdown (GPU/CPU support)"
 requires-python = ">=3.11"
 dependencies = [
     "torch>=2.0.0",
@@ -28,16 +28,3 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 py-modules = ["deepseek_ocr"]
-
-[tool.uv]
-# PyTorchのCUDA版を使用するための設定
-find-links = ["https://download.pytorch.org/whl/cu129"]
-
-[[tool.uv.index]]
-name = "pytorch"
-url = "https://download.pytorch.org/whl/cu129"
-explicit = true
-
-[tool.uv.sources]
-torch = { index = "pytorch" }
-torchvision = { index = "pytorch" }
