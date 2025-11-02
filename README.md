@@ -67,7 +67,10 @@ The easiest way to use DeepSeek-OCR is with [uv](https://docs.astral.sh/uv/), a 
 
 ### Prerequisites
 - Python 3.11+
-- NVIDIA GPU with CUDA support
+- **NVIDIA GPU with CUDA support (REQUIRED)**
+  - Tested on DGX Spark (NVIDIA GB10, CUDA 12.9)
+  - Should work on other NVIDIA GPUs with sufficient VRAM
+  - **CPU-only execution is NOT supported** (requires GPU)
 - [uv](https://docs.astral.sh/uv/) installed
 
 ### Installation
