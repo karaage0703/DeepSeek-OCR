@@ -56,13 +56,54 @@
 - [2025/10/20]🚀🚀🚀 We release DeepSeek-OCR, a model to investigate the role of vision encoders from an LLM-centric viewpoint.
 
 ## Contents
+- [Quick Start with uv (Recommended)](#quick-start-with-uv-recommended)
 - [Install](#install)
 - [vLLM Inference](#vllm-inference)
 - [Transformers Inference](#transformers-inference)
-  
 
+## Quick Start with uv (Recommended)
 
+The easiest way to use DeepSeek-OCR is with [uv](https://docs.astral.sh/uv/), a fast Python package manager.
 
+### Prerequisites
+- Python 3.11+
+- NVIDIA GPU with CUDA support
+- [uv](https://docs.astral.sh/uv/) installed
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/karaage0703/DeepSeek-OCR.git
+cd DeepSeek-OCR
+
+# Install dependencies (automatic with uv)
+uv sync
+```
+
+### Usage
+
+Convert documents (PDF/PNG/JPG) to Markdown:
+
+```bash
+# Using uv run
+uv run deepseek_ocr.py your_document.pdf
+
+# Using uvx (from project directory)
+uvx --from . deepseek_ocr your_image.png output.md
+```
+
+### Features
+- Supports PDF, PNG, and JPG files
+- Automatic image extraction and saving
+- Uses CUDA-optimized PyTorch (CUDA 12.9)
+- Simple dependency management with `pyproject.toml`
+
+### Output
+- `output.md`: Markdown file with OCR results
+- `output_files/page_N_images/`: Extracted images from the document
+
+For more advanced usage, see the sections below.
 
 ## Install
 >Our environment is cuda11.8+torch2.6.0.
